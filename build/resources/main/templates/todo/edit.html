@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier la tâche</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="https://charte.efrei.fr/wp-content/uploads/2022/07/LOGO_EFREI-WEB_noir.png" alt="Logo EFREI" height="30" class="d-inline-block align-top bg-white rounded p-1 me-2">
+                Todo App
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/todos}">Toutes les tâches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/todos/active}">Tâches actives</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/todos/completed}">Tâches terminées</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/todos/new}">Nouvelle tâche</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/about}">À propos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Modifier la tâche</h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/todos/{id}(id=${todo.id})}" th:object="${todo}" method="post">
+                            <input type="hidden" th:field="*{id}">
+                            
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Titre <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                                <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" th:field="*{description}" rows="3"></textarea>
+                                <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="priority" class="form-label">Priorité</label>
+                                <select class="form-select" id="priority" th:field="*{priority}">
+                                    <option value="1">Urgente</option>
+                                    <option value="2">Haute</option>
+                                    <option value="3">Moyenne</option>
+                                    <option value="4">Basse</option>
+                                    <option value="5">Très basse</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="completed" th:field="*{completed}">
+                                <label class="form-check-label" for="completed">Tâche terminée</label>
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a th:href="@{/todos}" class="btn btn-secondary me-md-2">Annuler</a>
+                                <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2025 Todo App - Développé par <a href="https://github.com/thibautgnt" target="_blank">Thibaut Genet</a> dans le cadre du cours DevSecOps à l'EFREI Paris
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
